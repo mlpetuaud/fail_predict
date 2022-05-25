@@ -15,7 +15,7 @@ app = FastAPI(title='Is this company likely to fail ?')
 class InputFormulaire(BaseModel):
     dettes: int = Field(..., example=3000)
     statut: str = Field(..., example='Société par actions simplifiée')
-    APE: str = Field(..., example='C')
+    ape: str = Field(..., example='C')
 
 #class Sentiment(BaseModel):
 #    sentiment: str
@@ -24,7 +24,7 @@ class InputFormulaire(BaseModel):
 # de récupérer le modèle
 def get_model():
     #path = os.path.dirname(os.path.realpath(__file__))
-    model = load('/Users/marie/Ecole_IA/4-Certif/1-Projet_chef_doeuvre/code/all_1/fit_model.joblib')
+    model = load('/Users/marie/Ecole_IA/4-Certif/1-Projet_chef_doeuvre/code/fail_predict_v1/fit_model.joblib')
     return model
 
 
