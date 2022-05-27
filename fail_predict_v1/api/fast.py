@@ -15,7 +15,7 @@ app = FastAPI(title='Is this company likely to fail ?')
 class InputFormulaire(BaseModel):
     dettes: int = Field(..., example=3000)
     statut: str = Field(..., example='Société par actions simplifiée')
-    ape: str = Field(..., example='C')
+    APE: str = Field(..., example='C')
 
 #class Sentiment(BaseModel):
 #    sentiment: str

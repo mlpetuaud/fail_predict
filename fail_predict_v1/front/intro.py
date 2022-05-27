@@ -24,12 +24,19 @@ with st.form("input_form"):
     # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
     if submitted:
-        test={"dettes":'2',"statut":'Société par actions simplifiée',"ape":'A'}
-        payload = {"dettes":dettes,"statut":statut,"ape":ape}
+        test={
+  "dettes": 3000,
+  "statut": "Société par actions simplifiée",
+  "APE": "C"
+}
+        #test={"dettes":2,"statut":'Société par actions simplifiée',"ape":'A'}
+        payload = {"dettes":dettes,"statut":statut,"APE":ape}
         test2 = json.dumps(payload)
+        dataform = str(test2).strip("'<>() ").replace('\'', '\"')
+        headers = {"Content-Type": "application/json", "Accept": "application/json"}
         #https://appdividend.com/2022/03/20/python-requests-post/
         #headers={'Content-Type':'application/json'}, 
-        response = requests.post("http://127.0.0.1:8000/predict", headers={'Content-Type':'application/json'}, data=json.loads(test2))
+        response = requests.post("http://127.0.0.1:8000/predict", headers=headers, json=payload)
         st.write(response.json())
         st.write(type(test2))
         st.write(test2)
