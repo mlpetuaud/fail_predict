@@ -9,6 +9,15 @@ data_path = f"{os.path.dirname(os.path.dirname(__file__))}/data/data_used"
 
 
 def add_custom_cols(df):
+    """This function adds some calculated columns to the dataset df
+
+    Args:
+        df (pandas DataFrame): dataframe holding the future dataset table : companies
+        accounts for the 2018 year
+
+    Returns:
+        pandas DataFrame: dataframe with added columns
+    """
     df["Credit client"] = (df['Clients et comptes rattachés (3) (net) (BXNET) 2018 (€)']*365)/(df["Chiffre d'affaires net (Total) (FL) 2018 (€)"]*1.2)
 
     df["Credit Fournisseurs"] = df['Dettes fournisseurs et comptes rattachés (DX) 2018 (€)']*365/(
@@ -204,6 +213,17 @@ def add_custom_cols(df):
 
 # get a data type dict in appropriate format to insert into DB
 def get_dataset_dtype_dict(df):
+    """This function returns, for a given DataFrame, a dictionnary holding the data types 
+    in appropriate format to insert into the database
+
+    Args:
+        df (pandas DataFrame): DataFrame
+
+    Returns:
+        dict: dictionnary holding, for each DataFrame column the SQLalchemy corresponding datatype
+        key=column_name
+        value=column_data_type
+    """
     model_dict = {}
     mapping_dtypes = {
         'O' : 'String',
@@ -224,7 +244,15 @@ def get_dataset_dtype_dict(df):
 
 
 def rename_cols(df):
-    mapping_cols_names = {col:col.replace(' ', '_') for col in df.columns.to_list()}
+    """This function 
+
+    Args:
+        df (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    mapping_cols_names = {col:col.replace(' ', '_').lower() for col in df.columns.to_list()}
     df = df.rename(columns=mapping_cols_names)
     return df
 
@@ -232,4 +260,5 @@ def prepare_naf_df(df):
     df = df.dropna(axis=1)
     df = df.drop("Unnamed: 22", axis=1)
     df = df.rename(columns={'A 732':'Code APE', 'Unnamed: 1':'Descriptif Code APE'})
+    df['Code APE'] = df['Code APE'].apply(lambda x: x.replace('.', ''))
     return df
