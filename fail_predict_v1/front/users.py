@@ -60,7 +60,9 @@ def check_password(username, password):
             and stored after hashing in database
 
     Returns:
-        Bool: True if input password is the same as the expected password (the one stored into the database for this username), False if it is not or if user name not found.
+        Bool: True if input password is the same as the expected password 
+        (the one stored into the database for this username)
+        False if it is not or if user name not found.
     """
     engine = sqlalchemy.create_engine(settings.DATABASE_URI, echo=True)
     # retrieve db password
@@ -74,7 +76,7 @@ def check_password(username, password):
     except:
         return False
 
-
+add_user('flo', 'hamel')
 
 
 
